@@ -1,8 +1,10 @@
 # Imagem do runner self-hosted (ARC) do LEMA-UFPB.
 # Base oficial + ferramentas de CI com versão FIXADA e checksum SHA-256 verificado.
 # Sem daemon Docker: o CLI e o buildx da base falam com o BuildKit remoto.
+# O digest fixa a base de forma imutável; ao mudar RUNNER_VERSION, atualize o digest (ver README).
 ARG RUNNER_VERSION=2.337.0
-FROM ghcr.io/actions/actions-runner:${RUNNER_VERSION}
+ARG RUNNER_DIGEST=sha256:e5496277be5d09bc968b3d64911b74e219ac4a3f2edce956a3ecf9271bea1ef4
+FROM ghcr.io/actions/actions-runner:${RUNNER_VERSION}@${RUNNER_DIGEST}
 
 # Versões e checksums (linux amd64). Para atualizar: ver README.
 ARG UV_VERSION=0.13.4
@@ -21,7 +23,7 @@ SHELL ["/bin/bash", "-euo", "pipefail", "-c"]
 
 # hadolint ignore=DL3008
 RUN apt-get update \
- && apt-get install -y --no-install-recommends ca-certificates curl git jq rsync unzip xz-utils zip \
+ && apt-get install -y --no-install-recommends ca-certificates curl git jq make netcat-openbsd rsync unzip xz-utils zip \
  && rm -rf /var/lib/apt/lists/*
 
 # Baixa, confere o SHA-256 e extrai. Falha o build se o checksum divergir.
@@ -41,7 +43,7 @@ RUN set -eux; \
     install -m 0755 yq /usr/local/bin/yq; \
     rm -f /tmp/*; \
     uv --version; node --version; npm --version; kustomize version; trivy --version; yq --version; \
-    rsync --version | head -n1; jq --version; docker --version; docker buildx version
+    rsync --version | head -n1; make --version | head -n1; command -v nc; jq --version; docker --version; docker buildx version
 
 # Runtime sem root: uid 1001 = `runner` na base.
 WORKDIR /home/runner

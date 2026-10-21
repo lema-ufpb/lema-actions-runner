@@ -36,10 +36,10 @@ jobs:
         run: |
           runner=$(sed -n 's/^ARG RUNNER_VERSION=//p' Dockerfile | head -n1)
           [ -n "$runner" ] || { echo "RUNNER_VERSION não encontrado no Dockerfile" >&2; exit 1; }
-          # N = nº da execução do workflow: monotônico e único, então uma tag nova
-          # nunca sobrescreve uma antiga (o cluster fixa `<runner>-lema.N`, não `latest`).
+          # N.A = nº da execução e da tentativa do workflow: único, então nem um re-run
+          # sobrescreve uma tag existente (o cluster fixa `<runner>-lema.N.A`, não `latest`).
           echo "runner=$runner" >> "$GITHUB_OUTPUT"
-          echo "tag=$runner-lema.$GITHUB_RUN_NUMBER" >> "$GITHUB_OUTPUT"
+          echo "tag=$runner-lema.$GITHUB_RUN_NUMBER.$GITHUB_RUN_ATTEMPT" >> "$GITHUB_OUTPUT"
 
       - uses: docker/login-action@dbcb813823bdd20940b903addbd779551569679f # v4.6.0
         with:

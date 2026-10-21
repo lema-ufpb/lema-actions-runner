@@ -16,26 +16,35 @@ Base oficial `ghcr.io/actions/actions-runner` (inclui `docker` CLI e `buildx`) m
 | `kustomize` | release do GitHub | SHA-256 fixado |
 | `trivy` | release do GitHub | SHA-256 fixado |
 | `yq` | release do GitHub | SHA-256 fixado |
-| `rsync`, `jq`, `curl`, `git`, `zip`, `unzip` | apt (Ubuntu 24.04) | assinatura do apt |
+| `make`, `netcat-openbsd` (`nc`), `rsync`, `jq`, `curl`, `git`, `zip`, `unzip` | apt (Ubuntu 24.04) | assinatura do apt |
 
 Não há daemon Docker na imagem. Builds usam `docker buildx` com o driver `remote`,
 apontando para o BuildKit do cluster. O processo roda como `runner` (sem root).
 
 ## Tags
 
-- `<versão-do-runner>-lema.N`, por exemplo `2.337.0-lema.12`: imutável por convenção
-  (`N` é o número da execução do workflow). **É esta que o cluster deve fixar.**
+- `<versão-do-runner>-lema.N.A`, por exemplo `2.337.0-lema.12.1`: imutável por convenção
+  (`N` = número da execução do workflow, `A` = tentativa; re-runs geram tag nova e não
+  sobrescrevem a anterior). **É esta que o cluster deve fixar.**
 - `latest`: ponteiro móvel, só para conveniência. Não usar em produção.
 
 ## Como atualizar
 
 ### Versão do runner
 
+> **Atenção: este runner roda SEM auto-update.** O GitHub deixa de despachar jobs para
+> runners com mais de ~30 dias de defasagem em relação à última versão do runner. Se a
+> imagem não for reconstruída com a versão nova a tempo, o scale set para de receber
+> jobs. O rebuild semanal não resolve isso: ele reaproveita a versão fixada da base.
+> Atualize a versão assim que uma release nova sair.
+
 1. Confira a nova versão em <https://github.com/actions/runner/releases> e se a tag
    existe em `ghcr.io/actions/actions-runner`.
-2. Altere `ARG RUNNER_VERSION` no `Dockerfile`.
-3. Abra PR. Ao entrar em `main`, o workflow `Build runner image` publica a nova tag.
-4. No repositório `lema-deploy`, atualize a tag da imagem no scale set `arc-runners`.
+2. Obtenha o digest: `docker buildx imagetools inspect ghcr.io/actions/actions-runner:<versão>`
+   (campo `Digest` do índice multi-arch).
+3. Altere `ARG RUNNER_VERSION` e `ARG RUNNER_DIGEST` no `Dockerfile`.
+4. Abra PR. Ao entrar em `main`, o workflow `Build runner image` publica a nova tag.
+5. No repositório `lema-deploy`, atualize a tag da imagem no scale set `arc-runners`.
 
 ### Ferramentas (uv, node, kustomize, trivy, yq)
 
@@ -46,8 +55,14 @@ falha se o checksum não bater.
 
 ### Rotina automática
 
-- Semanal (segunda, 05:00 UTC): rebuild para absorver correções da base e do Ubuntu.
+- Semanal (segunda, 05:00 UTC): rebuild para absorver correções de pacotes apt do Ubuntu (a base é fixada por digest).
 - O Dependabot (mensal, agrupado) atualiza as GitHub Actions e a imagem base.
+
+## Publicação no GHCR
+
+O pacote `ghcr.io/lema-ufpb/actions-runner` nasce **privado** no primeiro push. Depois do
+primeiro push, torne-o público em *Package settings → Change visibility* (a imagem não
+contém nada sensível), para que o cluster possa puxá-la sem `imagePullSecret`.
 
 ## Política: repositório público, runner hospedado
 
