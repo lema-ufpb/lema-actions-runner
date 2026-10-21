@@ -1,0 +1,28 @@
+version: 2
+updates:
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+    groups:
+      github-actions:
+        patterns: ["*"]
+    commit-message:
+      prefix: "chore"
+      include: "scope"
+    labels: ["dependencies", "ci"]
+
+  # Imagem base (ghcr.io/actions/actions-runner). As versões das ferramentas
+  # baixadas por ARG (uv, node, kustomize, trivy, yq) não são rastreadas pelo
+  # Dependabot: atualize à mão junto do checksum (ver README).
+  - package-ecosystem: "docker"
+    directory: "/"
+    schedule:
+      interval: "monthly"
+    groups:
+      base-image:
+        patterns: ["*"]
+    commit-message:
+      prefix: "chore"
+      include: "scope"
+    labels: ["dependencies"]
