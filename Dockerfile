@@ -43,7 +43,7 @@ RUN set -eux; \
     install -m 0755 yq /usr/local/bin/yq; \
     rm -f /tmp/*; \
     uv --version; node --version; npm --version; kustomize version; trivy --version; yq --version; \
-    rsync --version | head -n1; make --version | head -n1; command -v nc; jq --version; docker --version; docker buildx version
+    rsync --version | sed -n 1p; make --version | sed -n 1p; command -v nc; jq --version; docker --version; docker buildx version
 
 # Runtime sem root: uid 1001 = `runner` na base.
 WORKDIR /home/runner
