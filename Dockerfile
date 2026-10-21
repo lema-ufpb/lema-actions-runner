@@ -29,7 +29,7 @@ SHELL ["/bin/bash", "-euo", "pipefail", "-c"]
 # hadolint ignore=DL3008
 RUN apt-get update \
  && apt-get upgrade -y --no-install-recommends \
- && apt-get install -y --no-install-recommends ca-certificates curl git jq make netcat-openbsd rsync unzip xz-utils zip \
+ && apt-get install -y --no-install-recommends ca-certificates curl g++ gcc git jq libc6-dev make netcat-openbsd rsync unzip xz-utils zip \
  && rm -rf /var/lib/apt/lists/*
 
 # Esta imagem nunca roda daemon (builds vão para um BuildKit remoto): remove os binários
@@ -59,7 +59,7 @@ RUN set -eux; \
     install -m 0755 yq /usr/local/bin/yq; \
     rm -rf /tmp/*; \
     uv --version; node --version; npm --version; kustomize version; trivy --version; yq --version; \
-    rsync --version | sed -n 1p; make --version | sed -n 1p; command -v nc; jq --version; docker --version; docker buildx version
+    rsync --version | sed -n 1p; make --version | sed -n 1p; cc --version | sed -n 1p; c++ --version | sed -n 1p; command -v nc; jq --version; docker --version; docker buildx version
 
 # Runtime sem root: uid 1001 = `runner` na base.
 WORKDIR /home/runner
