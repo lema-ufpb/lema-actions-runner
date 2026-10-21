@@ -11,6 +11,7 @@ ARG UV_VERSION=0.13.4
 ARG UV_SHA256=2b428396f12572d4429cf210ca234dd599a33b3af0958a4d5ed569d63e3f344f
 ARG NODE_VERSION=24.22.1
 ARG NODE_SHA256=6c172a9ab6718f7b801fb5a7bd486af2ee5e32758086a04b84fcce2aa77095e6
+ARG NPM_VERSION=11.21.1
 ARG KUSTOMIZE_VERSION=5.8.3
 ARG KUSTOMIZE_SHA256=cb9e31198d3f63b44848bd0afc4c8efc56e6cfef9c93a4a39a211940e6decd61
 ARG TRIVY_VERSION=0.76.1
@@ -41,13 +42,14 @@ RUN set -eux; \
     tar -xzf uv.tgz --strip-components=1 -C /usr/local/bin uv-x86_64-unknown-linux-gnu/uv uv-x86_64-unknown-linux-gnu/uvx; \
     dl node.txz "https://nodejs.org/dist/v${NODE_VERSION}/node-v${NODE_VERSION}-linux-x64.tar.xz" "${NODE_SHA256}"; \
     tar -xJf node.txz --strip-components=1 -C /usr/local --exclude=CHANGELOG.md --exclude=LICENSE --exclude=README.md; \
+    npm install -g --no-audit --no-fund "npm@${NPM_VERSION}"; npm cache clean --force; \
     dl kustomize.tgz "https://github.com/kubernetes-sigs/kustomize/releases/download/kustomize%2Fv${KUSTOMIZE_VERSION}/kustomize_v${KUSTOMIZE_VERSION}_linux_amd64.tar.gz" "${KUSTOMIZE_SHA256}"; \
     tar -xzf kustomize.tgz -C /usr/local/bin kustomize; \
     dl trivy.tgz "https://github.com/aquasecurity/trivy/releases/download/v${TRIVY_VERSION}/trivy_${TRIVY_VERSION}_Linux-64bit.tar.gz" "${TRIVY_SHA256}"; \
     tar -xzf trivy.tgz -C /usr/local/bin trivy; \
     dl yq "https://github.com/mikefarah/yq/releases/download/v${YQ_VERSION}/yq_linux_amd64" "${YQ_SHA256}"; \
     install -m 0755 yq /usr/local/bin/yq; \
-    rm -f /tmp/*; \
+    rm -rf /tmp/*; \
     uv --version; node --version; npm --version; kustomize version; trivy --version; yq --version; \
     rsync --version | sed -n 1p; make --version | sed -n 1p; command -v nc; jq --version; docker --version; docker buildx version
 
