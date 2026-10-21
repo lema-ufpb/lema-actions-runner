@@ -23,8 +23,14 @@ SHELL ["/bin/bash", "-euo", "pipefail", "-c"]
 
 # hadolint ignore=DL3008
 RUN apt-get update \
+ && apt-get upgrade -y --no-install-recommends \
  && apt-get install -y --no-install-recommends ca-certificates curl git jq make netcat-openbsd rsync unzip xz-utils zip \
  && rm -rf /var/lib/apt/lists/*
+
+# Esta imagem nunca roda daemon (builds vão para um BuildKit remoto): remove os binários
+# Go do Docker Engine que a base traz (não são pacotes dpkg). Mantém o CLI `docker` e o buildx.
+RUN rm -f /usr/bin/dockerd /usr/bin/containerd /usr/bin/containerd-shim* /usr/bin/ctr \
+          /usr/bin/runc /usr/bin/docker-proxy /usr/bin/docker-init
 
 # Baixa, confere o SHA-256 e extrai. Falha o build se o checksum divergir.
 WORKDIR /tmp
