@@ -12,13 +12,17 @@ Base oficial `ghcr.io/actions/actions-runner` (inclui `docker` CLI e `buildx`) m
 | Ferramenta | Origem | Verificação |
 |---|---|---|
 | `uv`, `uvx` | release do GitHub | SHA-256 fixado |
-| `node` / `npm` (LTS) | nodejs.org | SHA-256 fixado |
+| `node` / `npm` (LTS) | nodejs.org; `npm` atualizado via `npm install -g npm@<fixa>` | SHA-256 fixado (node) |
+| `docker` (CLI), `docker buildx` | download.docker.com / release do GitHub | SHA-256 fixado (substituem os da base, que têm CVEs de Go) |
 | `kustomize` | release do GitHub | SHA-256 fixado |
 | `trivy` | release do GitHub | SHA-256 fixado |
 | `yq` | release do GitHub | SHA-256 fixado |
 | `make`, `netcat-openbsd` (`nc`), `rsync`, `jq`, `curl`, `git`, `zip`, `unzip` | apt (Ubuntu 24.04) | assinatura do apt |
 
-Não há daemon Docker na imagem. Builds usam `docker buildx` com o driver `remote`,
+**Não há daemon Docker na imagem, por design.** Os binários do Docker Engine que a base
+traz (`dockerd`, `containerd`, `containerd-shim*`, `ctr`, `runc`, `docker-proxy`,
+`docker-init`) são removidos no `Dockerfile`: nunca são usados aqui e carregariam
+dezenas de CVEs de Go. Ficam só o CLI `docker` e o plugin `buildx`. Builds usam `docker buildx` com o driver `remote`,
 apontando para o BuildKit do cluster. O processo roda como `runner` (sem root).
 
 ## Tags
@@ -52,6 +56,21 @@ Altere `*_VERSION` e o `*_SHA256` correspondente no `Dockerfile`. Os checksums v
 dos arquivos publicados pelo próprio projeto (`*.sha256`, `SHASUMS256.txt`,
 `checksums.txt`) ou, quando não existem, do `sha256sum` do binário baixado. O build
 falha se o checksum não bater.
+
+### Scan de vulnerabilidades (Trivy)
+
+O workflow escaneia a imagem antes de publicar e falha (`exit-code: 1`) em achados
+HIGH/CRITICAL com correção disponível (`ignore-unfixed`). O build também roda
+`apt-get upgrade` para absorver patches do Ubuntu.
+
+Exceções ficam em [`.trivyignore.yaml`](.trivyignore.yaml): cada CVE é listado
+explicitamente, **escopado ao caminho do componente** (nada é silenciado globalmente) e com
+`expired_at`. São achados em componentes que não controlamos: o npm embutido em
+`/home/runner/externals`, as dependências .NET em `/home/runner/bin` (ambos do runner
+oficial) e a toolchain Go dos releases mais recentes de `kustomize`, `yq` e `buildx`.
+Ao expirar, o gate volta a falhar, forçando a revisão (atualizar runner/ferramentas e
+remover as entradas já corrigidas). Para listar o que ainda é necessário:
+`trivy image --severity HIGH,CRITICAL --ignore-unfixed <imagem>` sem o ignorefile.
 
 ### Rotina automática
 

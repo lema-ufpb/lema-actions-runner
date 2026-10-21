@@ -6,6 +6,7 @@ on:
     branches: [main]
     paths:
       - Dockerfile
+      - .trivyignore.yaml
       - .github/workflows/build.yml
   workflow_dispatch:
   schedule:
@@ -66,6 +67,8 @@ jobs:
           image-ref: ${{ env.IMAGE }}:scan
           format: table
           ignore-unfixed: true
+          # Exceções explícitas e escopadas por caminho, com validade (ver README).
+          trivyignores: .trivyignore.yaml
           exit-code: 1
           severity: HIGH,CRITICAL
 

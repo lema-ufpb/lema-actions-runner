@@ -1,0 +1,200 @@
+# Excecoes explicitas do gate do Trivy (HIGH/CRITICAL com correcao disponivel).
+# Cada entrada e escopada ao caminho do componente; nada e silenciado globalmente.
+# Todas expiram em 2026-11-04 (antes do corte do runner 2.338.0): reavaliar na proxima
+# atualizacao do runner/ferramentas. Revisado em 2026-10-21.
+vulnerabilities:
+  - id: CVE-2026-17106
+    paths:
+      - "usr/local/lib/docker/cli-plugins/docker-buildx"
+    statement: "Dependencia Go do release mais recente do docker buildx (github.com/moby/go-archive); sem correcao possivel por nos, depende de novo release upstream."
+    expired_at: 2026-11-04
+  - id: CVE-2026-78669
+    paths:
+      - "usr/local/lib/docker/cli-plugins/docker-buildx"
+    statement: "Dependencia Go do release mais recente do docker buildx (golang.org/x/net); sem correcao possivel por nos, depende de novo release upstream."
+    expired_at: 2026-11-04
+  - id: CVE-2026-111943
+    paths:
+      - "usr/local/bin/kustomize"
+    statement: "Go (stdlib/deps) do release mais recente do kustomize release (stdlib); sem correcao possivel por nos, depende de novo release upstream."
+    expired_at: 2026-11-04
+  - id: CVE-2026-78667
+    paths:
+      - "usr/local/bin/kustomize"
+    statement: "Go (stdlib/deps) do release mais recente do kustomize release (stdlib); sem correcao possivel por nos, depende de novo release upstream."
+    expired_at: 2026-11-04
+  - id: CVE-2026-78669
+    paths:
+      - "usr/local/bin/kustomize"
+    statement: "Go (stdlib/deps) do release mais recente do kustomize release (stdlib); sem correcao possivel por nos, depende de novo release upstream."
+    expired_at: 2026-11-04
+  - id: CVE-2026-97031
+    paths:
+      - "usr/local/bin/kustomize"
+    statement: "Go (stdlib/deps) do release mais recente do kustomize release (stdlib); sem correcao possivel por nos, depende de novo release upstream."
+    expired_at: 2026-11-04
+  - id: CVE-2026-111943
+    paths:
+      - "usr/local/bin/yq"
+    statement: "Go (stdlib/deps) do release mais recente do yq release (stdlib); sem correcao possivel por nos, depende de novo release upstream."
+    expired_at: 2026-11-04
+  - id: CVE-2026-78667
+    paths:
+      - "usr/local/bin/yq"
+    statement: "Go (stdlib/deps) do release mais recente do yq release (stdlib); sem correcao possivel por nos, depende de novo release upstream."
+    expired_at: 2026-11-04
+  - id: CVE-2026-78669
+    paths:
+      - "usr/local/bin/yq"
+    statement: "Go (stdlib/deps) do release mais recente do yq release (golang.org/x/net, stdlib); sem correcao possivel por nos, depende de novo release upstream."
+    expired_at: 2026-11-04
+  - id: CVE-2026-97031
+    paths:
+      - "usr/local/bin/yq"
+    statement: "Go (stdlib/deps) do release mais recente do yq release (stdlib); sem correcao possivel por nos, depende de novo release upstream."
+    expired_at: 2026-11-04
+  - id: CVE-2026-58280
+    paths:
+      - "home/runner/bin/*.deps.json"
+    statement: "Upstream do runner: pacotes/runtime .NET em /home/runner/bin (Microsoft.NETCore.App.Runtime.linux-x64); sem correcao possivel por nos, depende de novo release upstream."
+    expired_at: 2026-11-04
+  - id: CVE-2026-69651
+    paths:
+      - "home/runner/bin/*.deps.json"
+    statement: "Upstream do runner: pacotes/runtime .NET em /home/runner/bin (Microsoft.NETCore.App.Runtime.linux-x64); sem correcao possivel por nos, depende de novo release upstream."
+    expired_at: 2026-11-04
+  - id: CVE-2026-84008
+    paths:
+      - "home/runner/bin/*.deps.json"
+    statement: "Upstream do runner: pacotes/runtime .NET em /home/runner/bin (System.Security.Cryptography.Pkcs); sem correcao possivel por nos, depende de novo release upstream."
+    expired_at: 2026-11-04
+  - id: CVE-2026-96225
+    paths:
+      - "home/runner/bin/*.deps.json"
+    statement: "Upstream do runner: pacotes/runtime .NET em /home/runner/bin (Microsoft.NETCore.App.Runtime.linux-x64); sem correcao possivel por nos, depende de novo release upstream."
+    expired_at: 2026-11-04
+  - id: CVE-2026-96231
+    paths:
+      - "home/runner/bin/*.deps.json"
+    statement: "Upstream do runner: pacotes/runtime .NET em /home/runner/bin (Microsoft.NETCore.App.Runtime.linux-x64); sem correcao possivel por nos, depende de novo release upstream."
+    expired_at: 2026-11-04
+  - id: CVE-2026-96233
+    paths:
+      - "home/runner/bin/*.deps.json"
+    statement: "Upstream do runner: pacotes/runtime .NET em /home/runner/bin (Microsoft.NETCore.App.Runtime.linux-x64); sem correcao possivel por nos, depende de novo release upstream."
+    expired_at: 2026-11-04
+  - id: CVE-2024-21538
+    paths:
+      - "home/runner/externals/**"
+    statement: "Upstream do runner: npm embutido em /home/runner/externals (node20/node24) (cross-spawn); sem correcao possivel por nos, depende de novo release upstream."
+    expired_at: 2026-11-04
+  - id: CVE-2025-64756
+    paths:
+      - "home/runner/externals/**"
+    statement: "Upstream do runner: npm embutido em /home/runner/externals (node20/node24) (glob); sem correcao possivel por nos, depende de novo release upstream."
+    expired_at: 2026-11-04
+  - id: CVE-2026-102276
+    paths:
+      - "home/runner/externals/**"
+    statement: "Upstream do runner: npm embutido em /home/runner/externals (node20/node24) (brace-expansion); sem correcao possivel por nos, depende de novo release upstream."
+    expired_at: 2026-11-04
+  - id: CVE-2026-102278
+    paths:
+      - "home/runner/externals/**"
+    statement: "Upstream do runner: npm embutido em /home/runner/externals (node20/node24) (brace-expansion); sem correcao possivel por nos, depende de novo release upstream."
+    expired_at: 2026-11-04
+  - id: CVE-2026-13149
+    paths:
+      - "home/runner/externals/**"
+    statement: "Upstream do runner: npm embutido em /home/runner/externals (node20/node24) (brace-expansion); sem correcao possivel por nos, depende de novo release upstream."
+    expired_at: 2026-11-04
+  - id: CVE-2026-14257
+    paths:
+      - "home/runner/externals/**"
+    statement: "Upstream do runner: npm embutido em /home/runner/externals (node20/node24) (brace-expansion); sem correcao possivel por nos, depende de novo release upstream."
+    expired_at: 2026-11-04
+  - id: CVE-2026-19534
+    paths:
+      - "home/runner/externals/**"
+    statement: "Upstream do runner: npm embutido em /home/runner/externals (node20/node24) (undici); sem correcao possivel por nos, depende de novo release upstream."
+    expired_at: 2026-11-04
+  - id: CVE-2026-23745
+    paths:
+      - "home/runner/externals/**"
+    statement: "Upstream do runner: npm embutido em /home/runner/externals (node20/node24) (tar); sem correcao possivel por nos, depende de novo release upstream."
+    expired_at: 2026-11-04
+  - id: CVE-2026-23950
+    paths:
+      - "home/runner/externals/**"
+    statement: "Upstream do runner: npm embutido em /home/runner/externals (node20/node24) (tar); sem correcao possivel por nos, depende de novo release upstream."
+    expired_at: 2026-11-04
+  - id: CVE-2026-24842
+    paths:
+      - "home/runner/externals/**"
+    statement: "Upstream do runner: npm embutido em /home/runner/externals (node20/node24) (tar); sem correcao possivel por nos, depende de novo release upstream."
+    expired_at: 2026-11-04
+  - id: CVE-2026-26960
+    paths:
+      - "home/runner/externals/**"
+    statement: "Upstream do runner: npm embutido em /home/runner/externals (node20/node24) (tar); sem correcao possivel por nos, depende de novo release upstream."
+    expired_at: 2026-11-04
+  - id: CVE-2026-26996
+    paths:
+      - "home/runner/externals/**"
+    statement: "Upstream do runner: npm embutido em /home/runner/externals (node20/node24) (minimatch); sem correcao possivel por nos, depende de novo release upstream."
+    expired_at: 2026-11-04
+  - id: CVE-2026-27903
+    paths:
+      - "home/runner/externals/**"
+    statement: "Upstream do runner: npm embutido em /home/runner/externals (node20/node24) (minimatch); sem correcao possivel por nos, depende de novo release upstream."
+    expired_at: 2026-11-04
+  - id: CVE-2026-27904
+    paths:
+      - "home/runner/externals/**"
+    statement: "Upstream do runner: npm embutido em /home/runner/externals (node20/node24) (minimatch); sem correcao possivel por nos, depende de novo release upstream."
+    expired_at: 2026-11-04
+  - id: CVE-2026-29786
+    paths:
+      - "home/runner/externals/**"
+    statement: "Upstream do runner: npm embutido em /home/runner/externals (node20/node24) (tar); sem correcao possivel por nos, depende de novo release upstream."
+    expired_at: 2026-11-04
+  - id: CVE-2026-31802
+    paths:
+      - "home/runner/externals/**"
+    statement: "Upstream do runner: npm embutido em /home/runner/externals (node20/node24) (tar); sem correcao possivel por nos, depende de novo release upstream."
+    expired_at: 2026-11-04
+  - id: CVE-2026-48815
+    paths:
+      - "home/runner/externals/**"
+    statement: "Upstream do runner: npm embutido em /home/runner/externals (node20/node24) (sigstore); sem correcao possivel por nos, depende de novo release upstream."
+    expired_at: 2026-11-04
+  - id: CVE-2026-59873
+    paths:
+      - "home/runner/externals/**"
+    statement: "Upstream do runner: npm embutido em /home/runner/externals (node20/node24) (tar); sem correcao possivel por nos, depende de novo release upstream."
+    expired_at: 2026-11-04
+  - id: CVE-2026-59874
+    paths:
+      - "home/runner/externals/**"
+    statement: "Upstream do runner: npm embutido em /home/runner/externals (node20/node24) (tar); sem correcao possivel por nos, depende de novo release upstream."
+    expired_at: 2026-11-04
+  - id: CVE-2026-69152
+    paths:
+      - "home/runner/externals/**"
+    statement: "Upstream do runner: npm embutido em /home/runner/externals (node20/node24) (brace-expansion); sem correcao possivel por nos, depende de novo release upstream."
+    expired_at: 2026-11-04
+  - id: CVE-2026-69192
+    paths:
+      - "home/runner/externals/**"
+    statement: "Upstream do runner: npm embutido em /home/runner/externals (node20/node24) (ip-address); sem correcao possivel por nos, depende de novo release upstream."
+    expired_at: 2026-11-04
+  - id: CVE-2026-73566
+    paths:
+      - "home/runner/externals/**"
+    statement: "Upstream do runner: npm embutido em /home/runner/externals (node20/node24) (tar); sem correcao possivel por nos, depende de novo release upstream."
+    expired_at: 2026-11-04
+  - id: CVE-2026-9496
+    paths:
+      - "home/runner/externals/**"
+    statement: "Upstream do runner: npm embutido em /home/runner/externals (node20/node24) (pacote); sem correcao possivel por nos, depende de novo release upstream."
+    expired_at: 2026-11-04
