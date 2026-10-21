@@ -2,8 +2,8 @@
 # Base oficial + ferramentas de CI com versão FIXADA e checksum SHA-256 verificado.
 # Sem daemon Docker: o CLI e o buildx da base falam com o BuildKit remoto.
 # O digest fixa a base de forma imutável; ao mudar RUNNER_VERSION, atualize o digest (ver README).
-ARG RUNNER_VERSION=2.337.0
-ARG RUNNER_DIGEST=sha256:e5496277be5d09bc968b3d64911b74e219ac4a3f2edce956a3ecf9271bea1ef4
+ARG RUNNER_VERSION=2.338.0
+ARG RUNNER_DIGEST=sha256:4ffadc0002b2581327e06101fc8c06cd189232baf79fe561fac9caeb76f5e807
 FROM ghcr.io/actions/actions-runner:${RUNNER_VERSION}@${RUNNER_DIGEST}
 
 # Versões e checksums (linux amd64). Para atualizar: ver README.
