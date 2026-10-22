@@ -198,3 +198,8 @@ vulnerabilities:
       - "home/runner/externals/**"
     statement: "Upstream do runner: npm embutido em /home/runner/externals (node20/node24) (pacote); sem correcao possivel por nos, depende de novo release upstream."
     expired_at: 2026-11-04
+  - id: CVE-2026-78669
+    paths:
+      - "usr/local/lib/docker/cli-plugins/docker-compose"
+    statement: "Dependencia Go do release mais recente do docker compose v5.6.1 (golang.org/x/net 0.58.0, corrigido na 0.60.0); sem correcao possivel por nos, depende de novo release upstream."
+    expired_at: 2026-11-04

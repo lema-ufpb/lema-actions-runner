@@ -33,16 +33,21 @@ Base oficial `ghcr.io/actions/actions-runner` (inclui `docker` CLI e `buildx`) m
 |---|---|---|
 | `uv`, `uvx` | release do GitHub | SHA-256 fixado |
 | `node` / `npm` (LTS) | nodejs.org; `npm` atualizado via `npm install -g npm@<fixa>` | SHA-256 fixado (node) |
-| `docker` (CLI), `docker buildx` | download.docker.com / release do GitHub | SHA-256 fixado (substituem os da base, que têm CVEs de Go) |
+| `docker` (CLI), `docker buildx`, `docker compose` | download.docker.com / release do GitHub | SHA-256 fixado (substituem os da base, que têm CVEs de Go) |
 | `kustomize` | release do GitHub | SHA-256 fixado |
 | `trivy` | release do GitHub | SHA-256 fixado |
 | `yq` | release do GitHub | SHA-256 fixado |
 | `gcc`, `g++`, `libc6-dev`, `make` | apt (Ubuntu 24.04) | assinatura do apt |
+| bibliotecas do Chromium headless (`libnss3`, `libgbm1`, `libatk*` etc.) e fontes básicas | apt (Ubuntu 24.04) | assinatura do apt |
 | `netcat-openbsd` (`nc`), `rsync`, `jq`, `curl`, `git`, `zip`, `unzip` | apt (Ubuntu 24.04) | assinatura do apt |
 
 🔧 **Compilador C/C++:** necessário para dependências que não publicam wheel e são compiladas
 na instalação (por exemplo, `pyreaddbc` com `uv sync` em Python 3.14). Sem ele o job falha com
 `No such file or directory: 'cc'`, o que não acontece nos runners hospedados do GitHub.
+
+🎭 **Playwright sem `sudo`:** o runner não tem `sudo`, então `npx playwright install --with-deps` falha (`no new privileges`). As bibliotecas de sistema do Chromium já estão na imagem; no job use só `npx playwright install chromium` (só baixa o navegador). Em runner hospedado mantenha `--with-deps`.
+
+📄 **Não está na imagem:** `pandoc` e Chrome/Chromium completo (o pipeline de PDF do `mir-odsr-docs` usa Chrome 122+). Esses jobs ficam em runner hospedado; embutir um navegador completo em toda imagem não compensa.
 
 🐳 **Não há daemon Docker na imagem, por design.** Os binários do Docker Engine que a base
 traz (`dockerd`, `containerd`, `containerd-shim*`, `ctr`, `runc`, `docker-proxy`,
