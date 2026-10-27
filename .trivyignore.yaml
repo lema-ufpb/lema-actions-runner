@@ -203,3 +203,13 @@ vulnerabilities:
       - "usr/local/lib/docker/cli-plugins/docker-compose"
     statement: "Dependencia Go do release mais recente do docker compose v5.6.1 (golang.org/x/net 0.58.0, corrigido na 0.60.0); sem correcao possivel por nos, depende de novo release upstream."
     expired_at: 2026-11-04
+  - id: CVE-2026-109869
+    paths:
+      - "home/runner/externals/**"
+    statement: "Upstream do runner: npm embutido em /home/runner/externals (node20/node24) (undici 6.27.0); sem correcao possivel por nos, depende de novo release upstream."
+    expired_at: 2026-11-04
+  - id: CVE-2026-109869
+    paths:
+      - "usr/local/lib/node_modules/npm/**"
+    statement: "npm 11.21.1 (e 12.2.1) embute undici 6.29.0; correcao (6.29.1) ainda nao esta em nenhum release do npm, depende de novo release upstream."
+    expired_at: 2026-11-04
