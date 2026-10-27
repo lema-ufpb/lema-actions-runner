@@ -121,9 +121,14 @@ quando não existem, do `sha256sum` do binário baixado. O build falha se o chec
 ### 🧪 Testar a imagem localmente
 
 ```bash
-docker build -t lema-runner:test .
-docker run --rm --entrypoint bash lema-runner:test -c 'cc --version; uv --version; node --version'
+make help          # lista os alvos
+make docker-build  # constrói lema-runner:local (NO_CACHE=1 refaz tudo)
+make docker-test   # confere que as ferramentas rodam como usuário runner (uid 1001)
+make docker-scan   # Trivy (container, mesma versão do CI) com .trivyignore.yaml; não precisa instalar o trivy
 ```
+
+Variáveis: `IMAGE_NAME`, `IMAGE_TAG`, `PLATFORM` (padrão `linux/amd64`, o mesmo do runner) e `TRIVY_VERSION` (a que o `trivy-action` do CI usa).
+Rode `make docker-scan` antes de abrir PR: se falhar aqui, falha no CI.
 
 ## 🛡️ Segurança
 
