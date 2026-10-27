@@ -36,6 +36,7 @@ Base oficial `ghcr.io/actions/actions-runner` (inclui `docker` CLI e `buildx`) m
 | `docker` (CLI), `docker buildx`, `docker compose` | download.docker.com / release do GitHub | SHA-256 fixado (substituem os da base, que têm CVEs de Go) |
 | `kustomize` | release do GitHub | SHA-256 fixado |
 | `trivy` | release do GitHub | SHA-256 fixado |
+| `gh` (GitHub CLI) | release do GitHub | SHA-256 fixado |
 | `yq` | release do GitHub | SHA-256 fixado |
 | `gcc`, `g++`, `libc6-dev`, `make` | apt (Ubuntu 24.04) | assinatura do apt |
 | bibliotecas do Chromium headless (`libnss3`, `libgbm1`, `libatk*` etc.) e fontes básicas | apt (Ubuntu 24.04) | assinatura do apt |
@@ -111,7 +112,7 @@ docker pull ghcr.io/lema-ufpb/actions-runner:<tag>
 4. Abra PR. Ao entrar em `main`, o workflow `Build runner image` publica a nova tag.
 5. No repositório `lema-deploy`, atualize a tag e o digest da imagem no scale set `arc-runners`.
 
-### 🧩 Ferramentas (uv, node, kustomize, trivy, yq)
+### 🧩 Ferramentas (uv, node, kustomize, trivy, gh, yq)
 
 Altere `*_VERSION` e o `*_SHA256` correspondente no `Dockerfile`. Os checksums vêm dos
 arquivos publicados pelo próprio projeto (`*.sha256`, `SHASUMS256.txt`, `checksums.txt`) ou,

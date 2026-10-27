@@ -22,6 +22,8 @@ ARG KUSTOMIZE_VERSION=5.8.3
 ARG KUSTOMIZE_SHA256=cb9e31198d3f63b44848bd0afc4c8efc56e6cfef9c93a4a39a211940e6decd61
 ARG TRIVY_VERSION=0.76.1
 ARG TRIVY_SHA256=c7cbe3137fb8a48a17574bede3dd6beb16742d1e9772929940fc90082c39d9c0
+ARG GH_VERSION=2.103.3
+ARG GH_SHA256=4c806978ffce1cec70853302a56d70ac6da4f19bae7adca4e1a8ab00633dd91d
 ARG YQ_VERSION=4.54.1
 ARG YQ_SHA256=8e34fc298390875de416e6a4afcb8cabeceb25d9aa8506c1a2f9353cf702ea5f
 
@@ -64,10 +66,12 @@ RUN set -eux; \
     tar -xzf kustomize.tgz -C /usr/local/bin kustomize; \
     dl trivy.tgz "https://github.com/aquasecurity/trivy/releases/download/v${TRIVY_VERSION}/trivy_${TRIVY_VERSION}_Linux-64bit.tar.gz" "${TRIVY_SHA256}"; \
     tar -xzf trivy.tgz -C /usr/local/bin trivy; \
+    dl gh.tgz "https://github.com/cli/cli/releases/download/v${GH_VERSION}/gh_${GH_VERSION}_linux_amd64.tar.gz" "${GH_SHA256}"; \
+    tar -xzf gh.tgz --strip-components=2 -C /usr/local/bin gh_${GH_VERSION}_linux_amd64/bin/gh; \
     dl yq "https://github.com/mikefarah/yq/releases/download/v${YQ_VERSION}/yq_linux_amd64" "${YQ_SHA256}"; \
     install -m 0755 yq /usr/local/bin/yq; \
     rm -rf /tmp/*; \
-    uv --version; node --version; npm --version; kustomize version; trivy --version; yq --version; \
+    uv --version; node --version; npm --version; kustomize version; trivy --version; gh --version | sed -n 1p; yq --version; \
     rsync --version | sed -n 1p; make --version | sed -n 1p; cc --version | sed -n 1p; c++ --version | sed -n 1p; command -v nc; jq --version; docker --version; docker buildx version; docker compose version
 
 # Runtime sem root: uid 1001 = `runner` na base.
