@@ -213,3 +213,28 @@ vulnerabilities:
       - "usr/local/lib/node_modules/npm/**"
     statement: "npm 11.21.1 (e 12.2.1) embute undici 6.29.0; correcao (6.29.1) ainda nao esta em nenhum release do npm, depende de novo release upstream."
     expired_at: 2026-11-04
+  - id: CVE-2026-109383
+    paths:
+      - "home/runner/externals/**"
+    statement: "Upstream do runner: npm embutido em /home/runner/externals (node20/node24) (undici 6.27.0); sem correcao possivel por nos, depende de novo release upstream."
+    expired_at: 2026-11-04
+  - id: CVE-2026-109383
+    paths:
+      - "usr/local/lib/node_modules/npm/**"
+    statement: "npm embutido na imagem (undici 6.29.0); correcao (6.29.1) ainda nao esta em nenhum release do npm, depende de novo release upstream."
+    expired_at: 2026-11-04
+  - id: CVE-2026-87018
+    paths:
+      - "home/runner/externals/**"
+    statement: "Upstream do runner: npm embutido em /home/runner/externals (node20/node24) (undici 6.27.0); sem correcao possivel por nos, depende de novo release upstream."
+    expired_at: 2026-11-04
+  - id: CVE-2026-87018
+    paths:
+      - "usr/local/lib/node_modules/npm/**"
+    statement: "npm embutido na imagem (undici 6.29.0); correcao (6.29.1) ainda nao esta em nenhum release do npm, depende de novo release upstream."
+    expired_at: 2026-11-04
+  - id: CVE-2026-116587
+    paths:
+      - "usr/local/bin/trivy"
+    statement: "Dependencia Go do release mais recente do trivy v0.76.1 (github.com/go-jose/go-jose/v4 4.1.5, corrigido na 4.1.6); sem correcao possivel por nos, depende de novo release upstream."
+    expired_at: 2026-11-04
